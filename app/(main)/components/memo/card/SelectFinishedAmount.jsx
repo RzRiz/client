@@ -2,15 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Toggle } from "@/components/ui/toggle";
 import { useState } from "react";
+import { getContrastColor } from "../../helper";
 import AddFinishedProductFromMemo from "./AddFinishedProduct";
 import RateAskInfo from "./RateAskInfo";
-import { getContrastColor } from "../../helper";
 
 export default function SelectFinishedAmount({
   product,
   setAllSelectedProducts,
   setOpen,
   refetch,
+  date,
 }) {
   const [selectedItem, setSelectedItem] = useState({
     id: "",
@@ -173,7 +174,11 @@ export default function SelectFinishedAmount({
         <div>
           {product?.finished_products?.length === 0 && (
             <div>
-              <AddFinishedProductFromMemo product={product} refetch={refetch} />
+              <AddFinishedProductFromMemo
+                product={product}
+                refetch={refetch}
+                date={date}
+              />
             </div>
           )}
         </div>

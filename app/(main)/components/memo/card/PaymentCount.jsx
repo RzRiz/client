@@ -9,14 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  useGetAllCustomersQuery,
-  useGetCustomerByIdQuery,
-} from "@/features/customers/customerApi";
+import { useGetAllCustomersQuery } from "@/features/customers/customerApi";
 
 import {
   useConfirmPurchaseMutation,
-  useGetAllProductsQuery,
   useUpdateConfirmPurchaseMutation,
 } from "@/features/products/productApi";
 import { format } from "date-fns";
@@ -36,6 +32,7 @@ export default function PaymentCount({
   type,
   refetch,
   chalan,
+  date,
 }) {
   const totalCost = allSelectedProducts?.reduce((acc, product) => {
     acc += product?.items?.reduce((acc, item) => {
@@ -104,9 +101,9 @@ export default function PaymentCount({
 
     const data = {
       customer: {
-        ...customer,
         discount,
         markedPaid: isMarkedPaid,
+        ...customer,
       },
       products: allSelectedProducts,
       payment,
@@ -152,7 +149,10 @@ export default function PaymentCount({
       });
 
       if (result?.isConfirmed) {
-        const res = await confirmPurchase(data);
+        const res = await confirmPurchase({
+          ...data,
+          date,
+        });
         refetch();
         refetchCustomers();
         if (res?.data?.success) {

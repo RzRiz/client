@@ -1,15 +1,8 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import PaymentForm from "@/app/(main)/components/form/PaymentForm";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { format, parseISO } from "date-fns";
-import { FaCalendarDays } from "react-icons/fa6";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -18,20 +11,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import EditDyeingCard from "./EditDyeingCard";
-import { EditGrayPayment } from "@/app/(main)/components/gray/EditGrayPayment";
-import PaymentForm from "@/app/(main)/components/form/PaymentForm";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import {
   useDyeingPaymentMutation,
   useToggleDyeingChalanMarkedByIdMutation,
 } from "@/features/dyeing/dyeingApi";
-import { EditDyeingPayment } from "./EditDyeingPayment";
-import Swal from "sweetalert2";
+import { format, parseISO } from "date-fns";
 import Link from "next/link";
+import { useState } from "react";
 import { FaRunning } from "react-icons/fa";
-import { numberToFixed, productStatus } from "../helper";
-import UpdateDyeingModal from "./UpdateDyeingModal";
+import { FaCalendarDays } from "react-icons/fa6";
 import { TbCoinTakaFilled, TbCurrencyTaka } from "react-icons/tb";
+import Swal from "sweetalert2";
+import { numberToFixed, productStatus } from "../helper";
+import { EditDyeingPayment } from "./EditDyeingPayment";
+import UpdateDyeingModal from "./UpdateDyeingModal";
 
 export default function DyeingCard({ data }) {
   const [addPayment, { isLoading }] = useDyeingPaymentMutation();
@@ -46,7 +44,7 @@ export default function DyeingCard({ data }) {
       return sum + payment?.amount;
     }, 0) || 0;
 
-  const totalDue = totalCost - totalPayment;
+  const totalDue = totalCost - totalPayment - (data?.discount || 0);
 
   const [open, setOpen] = useState();
   // toggle marked paid
@@ -73,7 +71,7 @@ export default function DyeingCard({ data }) {
         if (res?.data?.success) {
           Swal.fire(
             "Success!",
-            "Gray payment  has been marked unpaid.",
+            "Dyeing payment  has been marked unpaid.",
             "success"
           );
         } else {
@@ -101,7 +99,7 @@ export default function DyeingCard({ data }) {
         if (res?.data?.success) {
           Swal.fire(
             "Success!",
-            "Gray payment  has been marked unpaid.",
+            "Dyeing payment  has been marked unpaid.",
             "success"
           );
         } else {

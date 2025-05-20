@@ -1,11 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { graySlice } from "@/features/gray/graySlice";
-import { dyeingSlice } from "@/features/dyeing/dyeingSlice";
-import { productSlice } from "@/features/products/productSlice";
-import { chalanSlice } from "@/features/chalan/chalanSlice";
 import { authSlice } from "@/features/auth/authSlice";
+import { chalanSlice } from "@/features/chalan/chalanSlice";
 import { customersSlice } from "@/features/customers/customerSlice";
 import { dailySlice } from "@/features/daily/dailySlice";
+import { dyeingSlice } from "@/features/dyeing/dyeingSlice";
+import { graySlice } from "@/features/gray/graySlice";
+import { productSlice } from "@/features/products/productSlice";
+import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {

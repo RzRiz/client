@@ -1,12 +1,4 @@
 "use client";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 import {
   Breadcrumb,
@@ -27,22 +19,32 @@ import {
   useGetAllCustomerChalanQuery,
   useGetAllCustomersQuery,
 } from "@/features/customers/customerApi";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
 
 import CreatableSelect from "react-select/creatable";
 
+import TableSkeleton from "@/app/(main)/components/skeleton/TableSkeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import BuyProduct from "../components/memo/card/BuyProduct";
-import SelectedProduct from "../components/memo/card/SelectedProduct";
 import CountCost from "../components/memo/card/CountCost";
 import PaymentCount from "../components/memo/card/PaymentCount";
-import { Skeleton } from "@/components/ui/skeleton";
-import TableSkeleton from "@/app/(main)/components/skeleton/TableSkeleton";
+import SelectedProduct from "../components/memo/card/SelectedProduct";
+
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 export default function Memo() {
   const { data: { data: customers = [] } = {}, isLoading } =
     useGetAllCustomersQuery();
+  const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
 
   const { data: { data: customersChalan = [] } = {}, refetch } =
     useGetAllCustomerChalanQuery();
@@ -118,8 +120,33 @@ export default function Memo() {
             <span className="border uppercase  font-medium   h-8 inline-flex items-end justify-center bg-slate-200 px-3 py-1.5 text-[12px] rounded-l-md">
               Date
             </span>
-            <span className="border  h-8 inline-flex items-end justify-center  bg-slate-50 px-2 py-1.5 text-sm rounded-r-md">
-              {format(new Date(), "dd MMM yyyy")}
+            <span className="border  h-8 inline-flex items-end justify-center  bg-slate-100 text-sm rounded-r-md">
+              {/* {format(new Date(), "dd MMM yyyy")} */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full px-3 bg-slate-50 py-0 h-full border-none justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={(date) => {
+                      if (date) {
+                        setDate(format(date, "dd MMM yyyy"));
+                      }
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </span>
           </p>
         </div>
@@ -237,6 +264,7 @@ export default function Memo() {
                           <BuyProduct
                             setAllSelectedProducts={setAllSelectedProducts}
                             allSelectedProducts={allSelectedProducts}
+                            date={date}
                           />
                         </div>
                         <div
@@ -263,6 +291,7 @@ export default function Memo() {
                             <BuyProduct
                               setAllSelectedProducts={setAllSelectedProducts}
                               allSelectedProducts={allSelectedProducts}
+                              date={date}
                             />
                           </div>
                         </div>
@@ -286,6 +315,7 @@ export default function Memo() {
                           customer={customer}
                           setCustomer={setCustomer}
                           refetch={refetch}
+                          date={date}
                           setAllSelectedProducts={setAllSelectedProducts}
                         />
                       </div>

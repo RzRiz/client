@@ -1,17 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Toggle } from "@/components/ui/toggle";
 import { useGetAllProductsQuery } from "@/features/products/productApi";
-import Select from "react-select";
-import RateAskInfo from "./card/RateAskInfo";
-import SelectFinishedAmount from "./card/SelectFinishedAmount";
-import ProductInfo from "./card/ProductInfo";
 import { useState } from "react";
+import Select from "react-select";
+import ProductInfo from "./card/ProductInfo";
+import SelectFinishedAmount from "./card/SelectFinishedAmount";
 
 export default function MemoProduct({
   setAllSelectedProducts,
   setOpen,
   allSelectedProducts,
+  date,
 }) {
   const { data: { data: products = [] } = {}, refetch } =
     useGetAllProductsQuery();
@@ -88,6 +86,7 @@ export default function MemoProduct({
                   refetch={refetch}
                   setAllSelectedProducts={setAllSelectedProducts}
                   allSelectedProducts={allSelectedProducts}
+                  date={date}
                 />
               </div>
             </div>

@@ -6,12 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import MemoProduct from "../MemoProduct";
 import { useState } from "react";
+import MemoProduct from "../MemoProduct";
 
 export default function BuyProduct({
   setAllSelectedProducts,
   allSelectedProducts,
+  date,
 }) {
   const [open, setOpen] = useState();
   return (
@@ -30,6 +31,7 @@ export default function BuyProduct({
           setAllSelectedProducts={setAllSelectedProducts}
           setOpen={setOpen}
           allSelectedProducts={allSelectedProducts}
+          date={date}
         />
       </DialogContent>
     </Dialog>

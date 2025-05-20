@@ -15,15 +15,18 @@ import {
 
 import TableSkeleton from "@/app/(main)/components/skeleton/TableSkeleton";
 
+import DyeingCard from "@/app/(main)/components/dyeings/DyeingCard";
+import DyeingPaymentTable from "@/app/(main)/components/dyeings/DyeingPaymentTable";
+import ElahiVorsa from "@/app/(main)/components/ElahiVorsa";
+import { DatePickerWithRange } from "@/app/(main)/components/gray/DatePickerWithRange";
+import { numberToFixed } from "@/app/(main)/components/helper";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetDyeingByIdQuery } from "@/features/dyeing/dyeingApi";
-import Link from "next/link";
-import { IoLocationOutline } from "react-icons/io5";
-import { FiPhone } from "react-icons/fi";
-import ElahiVorsa from "@/app/(main)/components/ElahiVorsa";
-import { useState } from "react";
 import { addMonths, format, parseISO } from "date-fns";
-import { DatePickerWithRange } from "@/app/(main)/components/gray/DatePickerWithRange";
+import Link from "next/link";
+import { useState } from "react";
+import { FiPhone } from "react-icons/fi";
+import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePaid } from "react-icons/md";
 import { TbCalendarDue, TbCurrencyTaka } from "react-icons/tb";
 import {
@@ -31,9 +34,6 @@ import {
   totalSingleDyeingDiscount,
   totalSingleDyeingPaid,
 } from "../../../components/dyeings/dyeing.helper";
-import DyeingCard from "@/app/(main)/components/dyeings/DyeingCard";
-import DyeingPaymentTable from "@/app/(main)/components/dyeings/DyeingPaymentTable";
-import { numberToFixed } from "@/app/(main)/components/helper";
 
 export default function SingleDyeing({ params }) {
   const { id } = params;

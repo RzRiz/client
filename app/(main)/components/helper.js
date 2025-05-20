@@ -26,15 +26,19 @@ export const productShortage = (product) => {
 
   const gAmount = product?.gray_amount;
   const gRate = product?.gray_rate;
+  const dRate = product?.dyeing_rate;
   const difference =
     (finishedProduct && gAmount && finishedProduct - gAmount) || 0;
+
+  console.log(product);
 
   // sortage furmula
   const shortage =
     difference < 0 &&
     gRate &&
     finishedProduct &&
-    ((difference * gRate) / finishedProduct).toFixed(2);
+    dRate &&
+    Math.abs(((difference * (gRate + dRate)) / finishedProduct).toFixed(2));
 
   return shortage ? shortage : 0;
 };

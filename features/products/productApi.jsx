@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { productSlice } from "./productSlice";
 
 const productApi = productSlice.injectEndpoints({
